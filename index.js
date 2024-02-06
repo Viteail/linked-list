@@ -50,6 +50,7 @@ class LinkedList {
   }
 
   pop() {
+    if (this.headNode === null) return;
     let tmp = this.headNode;
     if (tmp.nextNode === null) {
       this.headNode = null;
@@ -82,8 +83,9 @@ class LinkedList {
   }
 
   toString() {
+    if (this.headNode === null) return null;
     let tmp = this.headNode;
-    let string = '';
+    let string = "";
     while (tmp !== null) {
       string += `( ${tmp.value} ) => `;
       if (tmp.nextNode === null) {
@@ -112,14 +114,19 @@ class LinkedList {
   }
 
   removeAt(index) {
-    let tmp = this.headNode;
-    let count = 0;
-    while (count !== index) {
-      count++;
-      tmp = tmp.nextNode;
+    let preNode = this.at(index - 1);
+    let nextNode = this.at(index + 1);
+    console.log(preNode, nextNode);
+    if (this.at(index) === null) return;
+    if (index === 0) {
+      this.headNode = nextNode;
+      return;
     }
-    tmp = null;
-
+    if (nextNode === null) {
+      preNode.nextNode = null;
+      return;
+    }
+    preNode.nextNode = nextNode;
   }
 }
 
@@ -131,9 +138,4 @@ class Node {
 }
 
 const linkedList = new LinkedList();
-linkedList.append('xd nig');
-linkedList.append('pula');
-linkedList.append('eblan');
-linkedList.append('huila proasta');
-linkedList.removeAt(2);
 console.log(linkedList);
